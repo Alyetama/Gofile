@@ -42,7 +42,7 @@ def gofile():
             links = []
 
             for file in track(files, description='[blue]Uploading...'):
-                res = curl_response(['curl', '-s', '-F', 'email=example@email', '-F', f'file=@{file}',
+                res = curl_response(['curl', '-s', '-F', f'email={email_addr}', '-F', f'file=@{file}',
                     f'https://{server}.gofile.io/uploadFile'
                 ])
                 code = res['data']['code']
@@ -55,7 +55,7 @@ def gofile():
 
 
         if path.isfile(args.file):
-            res = curl_response(['curl', '-F', 'email=example@email', '-F', f'file=@{args.file}',
+            res = curl_response(['curl', '-F', f'email={email_addr}', '-F', f'file=@{args.file}',
                 f'https://{server}.gofile.io/uploadFile'
             ])
             code = res['data']['code']
