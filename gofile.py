@@ -20,6 +20,8 @@ def gofile():
         server = ast.literal_eval(server)
         return server
 
+
+
     parser = argparse.ArgumentParser(
         description='Example: gofile -f <file_path>')
     parser.add_argument('-f',
