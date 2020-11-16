@@ -3,7 +3,6 @@
 
 import os
 
-
 def add_account():
     ans = input('Add an email address (y/n)? ')
     if ans.lower() == 'y':
