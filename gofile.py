@@ -4,10 +4,13 @@
 import subprocess
 import ast
 import pyperclip
+import argparse
 from rich.panel import Panel
 from rich import print as rich_print
 from platform import platform
-import argparse
+from os import path
+from glob import glob
+from rich.progress import track
 
 
 def gofile():
@@ -21,10 +24,10 @@ def gofile():
         description='Example: gofile -f <file_path>')
     parser.add_argument('-f',
                         '--file',
-                        help='path to the file you want to upload')
+                        help='path to the file/folder you want to upload')
     parser.add_argument('-o',
                         '--open',
-                        help='open the link when the file upload is completed',
+                        help='open the link when the file upload is completed (doesn\'t work when uploading a folder)',
                         action='store_true')
     args = parser.parse_args()
 
@@ -32,20 +35,36 @@ def gofile():
     server = server['data']['server']
 
     try:
-        res = curl_response([
-            'curl', '-F', f'file=@{args.file}',
-            f'https://{server}.gofile.io/uploadFile'
-        ])
-        code = res['data']['code']
+        if path.isdir(args.file):
+            files = [x for x in glob(f'{args.file}/**/*', recursive = True) if path.isfile(x)]
+            links = []
 
-        url = f'https://gofile.io/d/{code}'
+            for file in track(files, description='[blue]Uploading...'):
+                res = curl_response(['curl', '-s', '-F', 'email=example@email', '-F', f'file=@{file}', # re_email1
+                    f'https://{server}.gofile.io/uploadFile'
+                ])
+                code = res['data']['code']
+                url = f'https://gofile.io/d/{code}'
+                links.append(url)
 
-        pyperclip.copy(url)
+            files_list = '\n'.join(x for x in links)
+            pyperclip.copy(files_list)
+            rich_print(Panel.fit(f'[blue]{files_list}\n[red]Copied!'))
 
-        rich_print(Panel.fit(f'[blue]{url}    [red]Copied!'))
 
-        if 'macOS' in platform() and args.open is True:
-            subprocess.call(['open', f'{url}'])
+        if path.isfile(args.file):
+            res = curl_response(['curl', '-F', 'email=example@email', '-F', f'file=@{args.file}', # re_email2
+                f'https://{server}.gofile.io/uploadFile'
+            ])
+            code = res['data']['code']
+            url = f'https://gofile.io/d/{code}'
+
+            pyperclip.copy(url)
+            rich_print(Panel.fit(f'[blue]{url}    [red]Copied!'))
+
+            if 'macOS' in platform() and args.open is True:
+                subprocess.call(['open', f'{url}'])
+
 
     except:
         rich_print('[red]Something went wrong! Try again.')
