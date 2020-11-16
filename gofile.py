@@ -18,7 +18,7 @@ def gofile():
         return server
 
     parser = argparse.ArgumentParser(
-        description='Simple file upload: gofile -f <file_path>')
+        description='Example: gofile -f <file_path>')
     parser.add_argument('-f',
                         '--file',
                         help='path to the file you want to upload')
