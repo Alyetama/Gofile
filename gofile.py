@@ -20,7 +20,7 @@ def gofile():
         server = ast.literal_eval(server)
         return server
 
-
+    email_addr = 'none@none.com'
 
     parser = argparse.ArgumentParser(
         description='Example: gofile -f <file_path>')
@@ -42,7 +42,7 @@ def gofile():
             links = []
 
             for file in track(files, description='[blue]Uploading...'):
-                res = curl_response(['curl', '-s', '-F', 'email=example@email', '-F', f'file=@{file}', # re_email1
+                res = curl_response(['curl', '-s', '-F', 'email=example@email', '-F', f'file=@{file}',
                     f'https://{server}.gofile.io/uploadFile'
                 ])
                 code = res['data']['code']
@@ -55,7 +55,7 @@ def gofile():
 
 
         if path.isfile(args.file):
-            res = curl_response(['curl', '-F', 'email=example@email', '-F', f'file=@{args.file}', # re_email2
+            res = curl_response(['curl', '-F', 'email=example@email', '-F', f'file=@{args.file}',
                 f'https://{server}.gofile.io/uploadFile'
             ])
             code = res['data']['code']
