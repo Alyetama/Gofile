@@ -31,14 +31,16 @@ def gofile():
                         '--open',
                         help='open the link when the file upload is completed (doesn\'t work when uploading a folder)',
                         action='store_true')
+    parser.add_argument('-H',
+                        '--headless',
+                        help='Add this flag if you\'re on a headless machine or don\'t have access to clipboard',
+                        action='store_true')
     args = parser.parse_args()
 
     # server = curl_response(['curl', '-s', 'https://apiv2.gofile.io/getServer'])
     # server = server['data']['server']
-    server = 'srv-store'
 
-    for num in [1, 2, 4, 5, 6]:
-        server = f'{server}{num}'
+    for X in [1, 2, 4, 5, 6]:
         try:
             if path.isdir(args.file):
                 files = [x for x in glob(f'{args.file}/**/*', recursive = True) if path.isfile(x)]
@@ -46,14 +48,15 @@ def gofile():
 
                 for file in track(files, description='[blue]Uploading...'):
                     res = curl_response(['curl', '-s', '-F', f'email={email_addr}', '-F', f'file=@{file}',
-                        f'https://{server}.gofile.io/uploadFile'
+                        f'https://srv-store{X}.gofile.io/uploadFile'
                     ])
                     code = res['data']['code']
                     url = f'https://gofile.io/d/{code}'
                     links.append(url)
 
                 files_list = '\n'.join(x for x in links)
-                pyperclip.copy(files_list)
+                if args.headless is not True:
+                    pyperclip.copy(files_list)
                 print(Panel.fit(f'[blue]{files_list}\n[red]Copied!'))
 
                 break
@@ -61,12 +64,12 @@ def gofile():
 
             if path.isfile(args.file):
                 res = curl_response(['curl', '-F', f'email={email_addr}', '-F', f'file=@{args.file}',
-                    f'https://{server}.gofile.io/uploadFile'
+                    f'https://srv-store{X}.gofile.io/uploadFile'
                 ])
                 code = res['data']['code']
                 url = f'https://gofile.io/d/{code}'
-
-                pyperclip.copy(url)
+                if args.headless is not True:
+                    pyperclip.copy(url)
                 print(Panel.fit(f'[blue]{url}    [red]Copied!'))
 
                 if 'macOS' in platform() and args.open is True:
@@ -74,8 +77,11 @@ def gofile():
 
                 break
 
+        except KeyError:
+            print('Are you trying to use the program on a headless machine? Add the flag "-H" to your command.')
+            break
 
-        except:
+        except Exception as e:
             print('[red]Something went wrong! Try again.')
 
 
