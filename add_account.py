@@ -1,25 +1,17 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding: utf-8
 
-import os
-
-def add_account():
-    ans = input('Add an email address (y/n)? ')
-    if ans.lower() == 'y':
-        email_addr = input('Email Address: ')
-
-        with open('gofile.py') as f:
-            
-            with open('gofile_.py', 'w') as f2:
-                for num, line in enumerate(f):
-                    if num == 22:
-                        f2.write(f"    email_addr = '{email_addr}'\n")
-                    else:
-                        f2.write(line)
-
-        os.remove('gofile.py')
-        os.rename('gofile_.py', 'gofile.py')
+from tempfile import mkstemp
+from shutil import move, copymode
+from os import fdopen, remove
 
 
-if __name__ == '__main__':
-    add_account()
+email = input('Email address: ')
+fh, abs_path = mkstemp()
+with fdopen(fh, 'w') as new_file:
+    with open('gofile.py') as old_file:
+        for line in old_file:
+            new_file.write(line.replace('NONE', email))
+copymode('gofile.py', abs_path)
+remove('gofile.py')
+move(abs_path, 'gofile.py')

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding: utf-8
 
 import subprocess
@@ -6,7 +6,7 @@ import ast
 import pyperclip
 import argparse
 from rich.panel import Panel
-from rich import print as rich_print
+from rich import print
 from platform import platform
 from os import path
 from glob import glob
@@ -20,7 +20,7 @@ def gofile():
         server = ast.literal_eval(server)
         return server
 
-    email_addr = 'none@none.com'
+    email_addr = 'NONE'
 
     parser = argparse.ArgumentParser(
         description='Example: gofile -f <file_path>')
@@ -51,7 +51,7 @@ def gofile():
 
             files_list = '\n'.join(x for x in links)
             pyperclip.copy(files_list)
-            rich_print(Panel.fit(f'[blue]{files_list}\n[red]Copied!'))
+            print(Panel.fit(f'[blue]{files_list}\n[red]Copied!'))
 
 
         if path.isfile(args.file):
@@ -62,14 +62,14 @@ def gofile():
             url = f'https://gofile.io/d/{code}'
 
             pyperclip.copy(url)
-            rich_print(Panel.fit(f'[blue]{url}    [red]Copied!'))
+            print(Panel.fit(f'[blue]{url}    [red]Copied!'))
 
             if 'macOS' in platform() and args.open is True:
                 subprocess.call(['open', f'{url}'])
 
 
     except:
-        rich_print('[red]Something went wrong! Try again.')
+        print('[red]Something went wrong! Try again.')
 
 
 if __name__ == '__main__':
