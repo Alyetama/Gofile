@@ -56,6 +56,8 @@ def gofile():
                 pyperclip.copy(files_list)
                 print(Panel.fit(f'[blue]{files_list}\n[red]Copied!'))
 
+                break
+
 
             if path.isfile(args.file):
                 res = curl_response(['curl', '-F', f'email={email_addr}', '-F', f'file=@{args.file}',
