@@ -33,43 +33,48 @@ def gofile():
                         action='store_true')
     args = parser.parse_args()
 
-    server = curl_response(['curl', '-s', 'https://apiv2.gofile.io/getServer'])
-    server = server['data']['server']
+    # server = curl_response(['curl', '-s', 'https://apiv2.gofile.io/getServer'])
+    # server = server['data']['server']
+    server = 'srv-store'
 
-    try:
-        if path.isdir(args.file):
-            files = [x for x in glob(f'{args.file}/**/*', recursive = True) if path.isfile(x)]
-            links = []
+    for num in [1, 2, 4, 5, 6]:
+        server = f'{server}{num}'
+        try:
+            if path.isdir(args.file):
+                files = [x for x in glob(f'{args.file}/**/*', recursive = True) if path.isfile(x)]
+                links = []
 
-            for file in track(files, description='[blue]Uploading...'):
-                res = curl_response(['curl', '-s', '-F', f'email={email_addr}', '-F', f'file=@{file}',
+                for file in track(files, description='[blue]Uploading...'):
+                    res = curl_response(['curl', '-s', '-F', f'email={email_addr}', '-F', f'file=@{file}',
+                        f'https://{server}.gofile.io/uploadFile'
+                    ])
+                    code = res['data']['code']
+                    url = f'https://gofile.io/d/{code}'
+                    links.append(url)
+
+                files_list = '\n'.join(x for x in links)
+                pyperclip.copy(files_list)
+                print(Panel.fit(f'[blue]{files_list}\n[red]Copied!'))
+
+
+            if path.isfile(args.file):
+                res = curl_response(['curl', '-F', f'email={email_addr}', '-F', f'file=@{args.file}',
                     f'https://{server}.gofile.io/uploadFile'
                 ])
                 code = res['data']['code']
                 url = f'https://gofile.io/d/{code}'
-                links.append(url)
 
-            files_list = '\n'.join(x for x in links)
-            pyperclip.copy(files_list)
-            print(Panel.fit(f'[blue]{files_list}\n[red]Copied!'))
+                pyperclip.copy(url)
+                print(Panel.fit(f'[blue]{url}    [red]Copied!'))
 
+                if 'macOS' in platform() and args.open is True:
+                    subprocess.call(['open', f'{url}'])
 
-        if path.isfile(args.file):
-            res = curl_response(['curl', '-F', f'email={email_addr}', '-F', f'file=@{args.file}',
-                f'https://{server}.gofile.io/uploadFile'
-            ])
-            code = res['data']['code']
-            url = f'https://gofile.io/d/{code}'
-
-            pyperclip.copy(url)
-            print(Panel.fit(f'[blue]{url}    [red]Copied!'))
-
-            if 'macOS' in platform() and args.open is True:
-                subprocess.call(['open', f'{url}'])
+                break
 
 
-    except:
-        print('[red]Something went wrong! Try again.')
+        except:
+            print('[red]Something went wrong! Try again.')
 
 
 if __name__ == '__main__':
