@@ -70,7 +70,10 @@ def gofile():
                 url = f'https://gofile.io/d/{code}'
                 if args.headless is not True:
                     pyperclip.copy(url)
-                print(Panel.fit(f'[blue]{url}    [red]Copied!'))
+                    copied = '[red]Copied!'
+                else:
+                    copied = ''
+                print(Panel.fit(f'[blue]{url}    {copied}'))
 
                 if 'macOS' in platform() and args.open is True:
                     subprocess.call(['open', f'{url}'])
