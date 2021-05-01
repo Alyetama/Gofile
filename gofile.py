@@ -80,7 +80,7 @@ def gofile():
 
                 break
 
-        except KeyError:
+        except (KeyError, pyperclip.PyperclipException):
             print('Are you trying to use the program on a headless machine? Add the flag "-H" to your command.')
             break
 
