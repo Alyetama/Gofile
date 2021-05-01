@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# coding: utf-8
+
 import subprocess
 import ast
 import pyperclip
@@ -79,7 +82,8 @@ def gofile():
             break
 
         except Exception as e:
-            print('[red]Something went wrong! Try again.')
+            print('[red]Error:', e)
+            print('Trying the next server...')
 
 
 if __name__ == '__main__':
