@@ -1,2 +1,2 @@
-pyperclip==1.8.1
+pyshorteners
 rich==9.1.0

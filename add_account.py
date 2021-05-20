@@ -6,7 +6,7 @@ from shutil import move, copymode
 from os import fdopen, remove
 
 
-email = input('Email address (default: empty): ')
+email = input('Email address (default: empty)? ')
 fh, abs_path = mkstemp()
 with fdopen(fh, 'w') as new_file:
     with open('gofile.py') as old_file:
