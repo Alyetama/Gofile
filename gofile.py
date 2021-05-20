@@ -22,12 +22,11 @@ def gofile():
         server = ast.literal_eval(server)
         return server
 
-    email_addr = 'NONE'
+    email_addr = ''
     s = pyshorteners.Shortener(domain='https://ttm.sh')
 
     parser = argparse.ArgumentParser(
-        description='Example: gofile -f <file_path>',
-        epilog='Tip: if you\'re plan to download the links you generated from the command line, use `$ curl -LOJ <direct_link>` to preserve the original file name.')
+        description='Example: gofile -f <file_path>')
     parser.add_argument('-f',
                         '--file',
                         help='Path to the file/folder you want to upload')
