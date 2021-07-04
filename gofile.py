@@ -15,7 +15,6 @@ import pyshorteners
 
 
 def gofile():
-    
     def curl_response(command):
         server = subprocess.check_output(command)
         server = server.decode('UTF-8')
@@ -30,14 +29,17 @@ def gofile():
     parser.add_argument('-f',
                         '--file',
                         help='Path to the file/folder you want to upload')
-    parser.add_argument('-o',
-                        '--open',
-                        help='Open the link when the file upload is completed (doesn\'t work on folders) (macOS support only).',
-                        action='store_true')
-    parser.add_argument('-e',
-                        '--export',
-                        help='Export file URLs as a JSON file when the input is a folder.',
-                        action='store_true')
+    parser.add_argument(
+        '-o',
+        '--open',
+        help=
+        'Open the link when the file upload is completed (doesn\'t work on folders) (macOS support only).',
+        action='store_true')
+    parser.add_argument(
+        '-e',
+        '--export',
+        help='Export file URLs as a JSON file when the input is a folder.',
+        action='store_true')
     args = parser.parse_args()
 
     # server = curl_response(['curl', '-s', 'https://apiv2.gofile.io/getServer'])
@@ -46,44 +48,62 @@ def gofile():
     for X in [1, 2, 4, 5, 6]:
         try:
             if Path(args.file).is_dir():
-                files = [x for x in glob(f'{args.file}/**/*', recursive = True) if path.isfile(x)]
+                files = [
+                    x for x in glob(f'{args.file}/**/*', recursive=True)
+                    if path.isfile(x)
+                ]
                 data = {}
 
                 for file in track(files, description='[blue]Uploading...'):
-                    res = curl_response(['curl', '-s', '-F', f'email={email_addr}', '-F', f'file=@{file}',
+                    res = curl_response([
+                        'curl', '-s', '-F', f'email={email_addr}', '-F',
+                        f'file=@{file}',
                         f'https://srv-store{X}.gofile.io/uploadFile'
                     ])
                     name = Path(file).name
                     url = res['data']['downloadPage']
                     o_direct_link = res['data']['directLink']
-                    direct_link = s.nullpointer.short(res['data']['directLink'])
+                    direct_link = s.nullpointer.short(
+                        res['data']['directLink'])
 
-                    print(Panel.fit(f'[yellow]File:[/yellow] [blue]{name}[/blue]\n' +
-                    f'[yellow]Download page:[/yellow] [blue]{url}[/blue]\n' +
-                    f'[yellow]Direct link:[/yellow] [blue]{direct_link}[/blue]\n'))
+                    print(
+                        Panel.fit(
+                            f'[yellow]File:[/yellow] [blue]{name}[/blue]\n' +
+                            f'[yellow]Download page:[/yellow] [blue]{url}[/blue]\n'
+                            +
+                            f'[yellow]Direct link:[/yellow] [blue]{direct_link}[/blue]\n'
+                        ))
 
                     if args.export is True:
                         data[name] = {
-                        'DownloadPage': url,
-                        'DirectLink': o_direct_link
+                            'DownloadPage': url,
+                            'DirectLink': o_direct_link
                         }
 
                 with open(f'{Path(args.file).name}.json', 'w') as f:
                     json.dump(data, f, indent=4)
-                    print(f'[green]Exported links to:[/green] [magenta]{args.file}.json[/magenta]')
+                    print(
+                        f'[green]Exported links to:[/green] [magenta]{args.file}.json[/magenta]'
+                    )
                 break
 
-
             if Path(args.file).is_file():
-                res = curl_response(['curl', '-F', f'email={email_addr}', '-F', f'file=@{args.file}',
+                res = curl_response([
+                    'curl', '-F', f'email={email_addr}', '-F',
+                    f'file=@{args.file}',
                     f'https://srv-store{X}.gofile.io/uploadFile'
                 ])
                 url = res['data']['downloadPage']
                 direct_link = s.nullpointer.short(res['data']['directLink'])
-                
-                print(Panel.fit(f'[yellow]File:[/yellow] [blue]{Path(args.file).name}[/blue]\n' +
-                    f'[yellow]Download page:[/yellow] [blue]{url}[/blue]\n' +
-                    f'[yellow]Direct link:[/yellow] [blue]{direct_link}[/blue]'))
+
+                print(
+                    Panel.fit(
+                        f'[yellow]File:[/yellow] [blue]{Path(args.file).name}[/blue]\n'
+                        +
+                        f'[yellow]Download page:[/yellow] [blue]{url}[/blue]\n'
+                        +
+                        f'[yellow]Direct link:[/yellow] [blue]{direct_link}[/blue]'
+                    ))
 
                 if 'macOS' in platform() and args.open is True:
                     subprocess.call(['open', f'{url}'])
