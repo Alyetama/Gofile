@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "gofile"
+version = "0.2.0"
+description = "Upload files to Gofile.io"
+authors = ["Alyetama <56323389+Alyetama@users.noreply.github.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.6"
+requests = "^2.0"
+rich = "^10.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+gofile = 'gofile:gofile.main'
