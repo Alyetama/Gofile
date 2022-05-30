@@ -1,8 +1,8 @@
-# Gofile
+# gofile
 
-🚀 Python wrapper for Gofile.io Upload API[^1].
+🚀 Python wrapper for gofile.io Upload API[^1].
 
-[![CI](https://github.com/Alyetama/Gofile/actions/workflows/poetry-build.yml/badge.svg)](https://github.com/Alyetama/Gofile/actions/workflows/poetry-build.yml) [![Supported Python versions](https://img.shields.io/badge/Python-%3E=3.6-blue.svg)](https://www.python.org/downloads/) [![PEP8](https://img.shields.io/badge/Code%20style-PEP%208-orange.svg)](https://www.python.org/dev/peps/pep-0008/) 
+[![CI](https://github.com/Alyetama/gofile/actions/workflows/poetry-build.yml/badge.svg)](https://github.com/Alyetama/gofile/actions/workflows/poetry-build.yml) [![Supported Python versions](https://img.shields.io/badge/Python-%3E=3.6-blue.svg)](https://www.python.org/downloads/) [![PEP8](https://img.shields.io/badge/Code%20style-PEP%208-orange.svg)](https://www.python.org/dev/peps/pep-0008/) 
 
 
 ## Requirements
@@ -39,7 +39,7 @@ optional arguments:
 
 ### 🔑 Uploading to an account using access token
 
-If you want the files to be uploaded to a specific account, you can export your Gofile token, which can be retrieved from the profile page, as an environment variable.
+If you want the files to be uploaded to a specific account, you can export your gofile token, which can be retrieved from the profile page, as an environment variable.
 
 ```sh
 export GOFILE_TOKEN='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
@@ -140,4 +140,4 @@ Exported data to: gofile_export_1653950555.json
 ]
 ```
 
-[^1]: **Disclaimer: This tool is not associated with Gofile, WOJTEK SAS ©, or Gofile Team.**
+[^1]: **Disclaimer: This tool is not associated with gofile, WOJTEK SAS ©, or gofile Team.**

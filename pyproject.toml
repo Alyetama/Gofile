@@ -1,9 +1,10 @@
 [tool.poetry]
-name = "gofile"
-version = "0.2.0"
+name = "gofilepy"
+version = "0.2.1"
 description = "Upload files to Gofile.io"
-authors = ["Alyetama <56323389+Alyetama@users.noreply.github.com>"]
+authors = ["Mohammad Alyetama <malyetama@pm.me>"]
 license = "MIT"
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.6"
@@ -17,4 +18,4 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-gofile = 'gofile:gofile.main'
+gofile = 'gofilepy:gofile.main'
