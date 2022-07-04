@@ -37,18 +37,9 @@ optional arguments:
   -v, --version    Show program's version number and exit
 ```
 
-### 🔑 Uploading to an account using access token
-
-If you want the files to be uploaded to a specific account, you can export your gofile token, which can be retrieved from the profile page, as an environment variable.
-
-```sh
-export GOFILE_TOKEN='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
-```
-
-
 ## 📕 Examples
 
-### Example 1
+### Example 1: Uploading one file
 ```sh
 ➜ gofile foo.txt
 ╭───────────────────────────────────────────╮
@@ -58,7 +49,7 @@ export GOFILE_TOKEN='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 Uploading progress: ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
 ```
 
-### Example 2
+### Example 2: Uploading multiple files/directories
 ```bash
 ➜ gofile foo.txt bar.txt foobar.txt foo/
 ╭───────────────────────────────────────────╮
@@ -80,7 +71,7 @@ Uploading progress: ━━━━━━━━━━━━━━━━━━━━
 Uploading progress: ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
 ```
 
-### Example 3
+### Example 3: Verbose output
 ```sh
 ➜ gofile foo.txt -vv
 ╭──────────────────────────────────────────────────────────────────────────────╮
@@ -105,7 +96,7 @@ Uploading progress: ━━━━━━━━━━━━━━━━━━━━
 Uploading progress: ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
 ```
 
-### Example 4
+### Example 4: Exporting the API response to a JSON file
 ```sh
 ➜ gofile foo.txt -e
 ╭───────────────────────────────────────────╮
@@ -116,8 +107,9 @@ Uploading progress: ━━━━━━━━━━━━━━━━━━━━
 Exported data to: gofile_export_1653950555.json
 ```
 
-- Content of `gofile_export_1653950555.json`:
-
+<details>
+  <summary>Content of <code>gofile_export_1653950555.json</code></summary>
+  
 ```json
 [
     {
@@ -139,5 +131,17 @@ Exported data to: gofile_export_1653950555.json
     }
 ]
 ```
+</details>
 
-[^1]: **Disclaimer: This tool is not associated with gofile, WOJTEK SAS ©, or gofile Team.**
+## Misc.
+
+### 🔑 Optional: Saving uploads to your Gofile account
+
+If you want the files to be uploaded to a specific account, you can export your gofile token, which can be retrieved from the profile page, as an environment variable.
+
+```sh
+export GOFILE_TOKEN='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+```
+
+
+[^1]: **Disclaimer: This tool is not associated with Gofile, WOJTEK SAS ©, or the Gofile Team.**
