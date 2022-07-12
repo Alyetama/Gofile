@@ -191,3 +191,4 @@ Temporary Items
 *.log
 logs/
 *.out
+build.sh

@@ -18,7 +18,7 @@ from rich.highlighter import JSONHighlighter
 from rich.panel import Panel
 from rich.progress import track
 
-__version__ = '0.2.0'
+from .__version__ import __version__
 
 
 def upload(file, best_server):
@@ -85,7 +85,7 @@ def gofile_upload(path, verbose=False, export=False, open_urls=False):
 
     for _path in path:
         if Path(_path).is_dir():
-            dir_items = glob(f'{_path}/**/*', recursive=True)
+            dir_items = glob(str(Path(f'{_path}/**/*')), recursive=True)
             local_files = [x for x in dir_items if not Path(x).is_dir()]
             files.append(local_files)
         else:
