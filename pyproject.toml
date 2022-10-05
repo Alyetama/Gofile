@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gofilepy"
-version = "0.2.3"
+version = "0.3.0"
 description = "Upload files to Gofile.io"
 authors = ["Mohammad Alyetama <malyetama@pm.me>"]
 license = "MIT"

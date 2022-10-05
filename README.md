@@ -19,27 +19,30 @@ pip install gofilepy
 ## ⌨️ Usage
 
 ```
-➜ gofile --help
-
-usage: gofile [-h] [-o] [-e] [-vv] [-v] path [path ...]
+usage: gofilepy [-h] [-s] [-o] [-e] [-vv] [-v] path [path ...]
 
 Example: gofile <file/folder_path>
 
 positional arguments:
-  path             Path to the file(s) and/or folder(s)
+  path                  Path to the file(s) and/or folder(s)
 
-optional arguments:
-  -h, --help       show this help message and exit
-  -o, --open-urls  Open the URL(s) in the browser when the upload is complete
-                   (macOS-only)
-  -e, --export     Export upload response(s) to a JSON file
-  -vv, --verbose   Show more information
-  -v, --version    Show program's version number and exit
+options:
+  -h, --help            show this help message and exit
+  -s, --to-single-folder
+                        Upload multiple files to the same folder. All files
+                        will share the same URL. This option requires a valid
+                        token exported as: `GOFILE_TOKEN`
+  -o, --open-urls       Open the URL(s) in the browser when the upload is
+                        complete (macOS-only)
+  -e, --export          Export upload response(s) to a JSON file
+  -vv, --verbose        Show more information
+  -v, --version         show program's version number and exit
 ```
 
 ## 📕 Examples
 
 ### Example 1: Uploading one file
+
 ```sh
 ➜ gofile foo.txt
 ╭───────────────────────────────────────────╮
@@ -50,6 +53,7 @@ Uploading progress: ━━━━━━━━━━━━━━━━━━━━
 ```
 
 ### Example 2: Uploading multiple files/directories
+
 ```bash
 ➜ gofile foo.txt bar.txt foobar.txt foo/
 ╭───────────────────────────────────────────╮
@@ -71,9 +75,25 @@ Uploading progress: ━━━━━━━━━━━━━━━━━━━━
 Uploading progress: ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
 ```
 
-### Example 3: Verbose output
+### Example 3: Uploading multiple files to the same URL
+
+This option requires a Gofile token (see: [## Misc.](#misc)).
+
+```bash
+➜ gofile -s foo.txt bar.txt
+╭───────────────────────────────────────────╮
+│ Files:                                    │
+│ foo.txt                                   │
+│ bar.txt                                   │
+│ Download page: https://gofile.io/d/bFwawd │
+╰───────────────────────────────────────────╯
+Uploading progress: ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+```
+
+### Example 4: Verbose output
+
 ```sh
-➜ gofile foo.txt -vv
+➜ gofile -vv foo.txt
 ╭──────────────────────────────────────────────────────────────────────────────╮
 │ {                                                                            │
 │   "foo.txt": {                                                               │
@@ -96,9 +116,10 @@ Uploading progress: ━━━━━━━━━━━━━━━━━━━━
 Uploading progress: ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
 ```
 
-### Example 4: Exporting the API response to a JSON file
+### Example 5: Exporting the API response to a JSON file
+
 ```sh
-➜ gofile foo.txt -e
+➜ gofile -e foo.txt
 ╭───────────────────────────────────────────╮
 │ File: foo.txt                             │
 │ Download page: https://gofile.io/d/8t79Lz │
@@ -137,7 +158,7 @@ Exported data to: gofile_export_1653950555.json
 
 ### 🔑 Optional: Saving uploads to your Gofile account
 
-If you want the files to be uploaded to a specific account, you can export your gofile token, which can be retrieved from the profile page, as an environment variable.
+If you want the files to be uploaded to a specific account, you can export your gofile token, which can be retrieved from the [profile page](https://gofile.io/myProfile), as an environment variable `GOFILE_TOKEN`.
 
 ```sh
 export GOFILE_TOKEN='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
