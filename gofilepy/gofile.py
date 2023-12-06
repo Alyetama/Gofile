@@ -20,8 +20,6 @@ from rich.highlighter import JSONHighlighter
 from rich.panel import Panel
 from rich.progress import track
 
-from .__version__ import __version__
-
 
 def upload(file: str, best_server: str, folder_id: Optional[str] = None):
     f_obj = Path(file)
@@ -60,7 +58,7 @@ def gofile_upload(path: list,
                   open_urls: bool = False):
     highlighter = JSONHighlighter()
 
-    get_server = requests.get('https://apiv2.gofile.io/getServer')
+    get_server = requests.get('https://api.gofile.io/getServer')
     best_server = get_server.json()['data']['server']
 
     files = []
@@ -171,10 +169,6 @@ def opts():
     parser.add_argument('path',
                         nargs='+',
                         help='Path to the file(s) and/or folder(s)')
-    parser.add_argument('-v',
-                        '--version',
-                        action='version',
-                        version=f'%(prog)s {__version__}')
     return parser.parse_args()
 
 

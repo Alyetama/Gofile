@@ -36,7 +36,6 @@ options:
                         complete (macOS-only)
   -e, --export          Export upload response(s) to a JSON file
   -vv, --verbose        Show more information
-  -v, --version         show program's version number and exit
 ```
 
 ## 📕 Examples
