@@ -15,6 +15,12 @@
 pip install gofilepy
 ```
 
+## ⬆️  Upgrade Existing Installation
+
+```sh
+pip install -U gofilepy
+```
+
 
 ## ⌨️ Usage
 
