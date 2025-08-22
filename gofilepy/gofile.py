@@ -28,7 +28,7 @@ def upload(file: str, best_server: str, folder_id: Optional[str] = None):
     with open(f_obj, 'rb') as f:
         f_data = f.read()
 
-    attempt = 0
+    attempt, resp = 0, None
     while True:
         try:
             resp = requests.post(
@@ -42,12 +42,11 @@ def upload(file: str, best_server: str, folder_id: Optional[str] = None):
         except requests.exceptions.ConnectionError:
             rprint(
                 'The connection was refused from the API side! '
-                f'Trying again... ([cyan]{attempt}[/cyan]/10)',
-                style='red')
-            time.sleep(2)
+                f'Trying again... ([cyan]{attempt}[/cyan]/10)')
             attempt += 1
             if attempt > 10:
                 break
+            time.sleep(2)
     return resp
 
 
