@@ -59,11 +59,8 @@ def gofile_upload(path: list,
         verbose = int(verbose)
     if verbose:
         from rich import print as rprint
-        from rich.highlighter import JSONHighlighter
         from rich.panel import Panel
         from rich.progress import track
-
-    highlighter = JSONHighlighter()
 
     get_server = requests.get('https://api.gofile.io/servers')
     servers = get_server.json()
@@ -91,7 +88,9 @@ def gofile_upload(path: list,
     urls = []
     folder_id = None
 
-    for file in track(files, description='[magenta]Uploading progress:'):
+    if verbose:
+        files = track(files, description='[magenta]Uploading progress:')
+    for file in files:
         upload_resp = upload(file, best_server, folder_id).json()
 
         if to_single_folder and not os.getenv('GOFILE_TOKEN'):
@@ -114,6 +113,9 @@ def gofile_upload(path: list,
         urls.append(url)
 
         if verbose >= 1:
+            from rich.highlighter import JSONHighlighter
+
+            highlighter = JSONHighlighter()
             highlighted_resp = highlighter(json.dumps(record, indent=2))
             rprint(Panel(highlighted_resp))
 
