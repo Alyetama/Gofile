@@ -142,31 +142,22 @@ def gofile_upload(path: list,
 def opts():
     parser = argparse.ArgumentParser(
         description='Example: gofile <file/folder_path>')
-    parser.add_argument(
-        '-s',
-        '--to-single-folder',
-        help=
-        'Upload multiple files to the same folder. All files will share the '
-        'same URL. This option requires a valid token exported as: '
-        '`GOFILE_TOKEN`',
+    parser.add_argument('-s', '--to-single-folder',
+        help='Upload multiple files to the same folder. All files will share the '
+            'same URL. This option requires a valid token exported as: `GOFILE_TOKEN`',
         action='store_true')
-    parser.add_argument(
-        '-o',
-        '--open-urls',
-        help='Open the URL(s) in the browser when the upload is complete '
-        '(macOS-only)',
+    parser.add_argument('-o', '--open-urls',
+        help='Open the URL(s) in the browser when the upload is complete (macOS-only)',
         action='store_true')
-    parser.add_argument('-e',
-                        '--export',
-                        help='Export upload response(s) to a JSON file',
-                        action='store_true')
-    parser.add_argument('-vv',
-                        '--verbose',
-                        help='Show more information',
-                        action='store_true')
+    parser.add_argument('-e', '--export',
+        help='Export upload response(s) to a JSON file',
+        action='store_true')
+    parser.add_argument('-vv', '--verbose',
+        help='Show more information',
+        action='store_true')
     parser.add_argument('path',
-                        nargs='+',
-                        help='Path to the file(s) and/or folder(s)')
+        nargs='+',
+        help='Path to the file(s) and/or folder(s)')
     return parser.parse_args()
 
 
