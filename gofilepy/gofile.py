@@ -21,7 +21,7 @@ from rich.panel import Panel
 from rich.progress import track
 
 
-def upload(file: str, best_server: str, folder_id: Optional[str] = None):
+def upload(file: str, best_server: str, folder_id: Optional[str] = None, nb_retries: int = 10):
     f_obj = Path(file)
     content_type = mimetypes.guess_type(f_obj)[0]
     upload_url = f'https://{best_server}.gofile.io/uploadFile'
@@ -29,7 +29,7 @@ def upload(file: str, best_server: str, folder_id: Optional[str] = None):
         f_data = f.read()
 
     resp = None
-    for attempt in range(10):
+    for attempt in range(1 + nb_retries):
         try:
             resp = requests.post(
                 upload_url,
@@ -43,7 +43,8 @@ def upload(file: str, best_server: str, folder_id: Optional[str] = None):
             rprint(
                 'The connection was refused from the API side! '
                 f'Trying again... ([cyan]{attempt}[/cyan]/10)')
-            time.sleep(2)
+            if attempt < nb_retries:  # no need for sleep if it is the last iteration
+                time.sleep(2)
     return resp
 
 
