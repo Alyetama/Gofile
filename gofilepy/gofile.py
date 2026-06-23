@@ -28,27 +28,27 @@ def upload(file: str, best_server: str, folder_id: Optional[str] = None):
     with open(f_obj, 'rb') as f:
         f_data = f.read()
 
-    attempt = 0
-    while True:
+    max_attempts = 10
+    for attempt in range(1, max_attempts + 1):
         try:
-            resp = requests.post(
+            return requests.post(
                 upload_url,
                 data={
                     'token': os.getenv('GOFILE_TOKEN'),
                     'folderId': folder_id
                 },
                 files={'file': (f_obj.name, f_data, content_type)})
-            break
         except requests.exceptions.ConnectionError:
             rprint(
                 'The connection was refused from the API side! '
-                f'Trying again... ([cyan]{attempt}[/cyan]/10)',
+                f'Trying again... ([cyan]{attempt}[/cyan]/{max_attempts})',
                 style='red')
             time.sleep(2)
-            attempt += 1
-            if attempt > 10:
-                break
-    return resp
+
+    rprint(
+        f'[red]ERROR: Failed to upload [blue]{f_obj.name}[/blue] after '
+        f'{max_attempts} attempts.[/red]')
+    return None
 
 
 def gofile_upload(path: list,
@@ -86,7 +86,16 @@ def gofile_upload(path: list,
     n = 0
 
     for file in track(files, description='[magenta]Uploading progress:'):
-        upload_resp = upload(file, best_server, folder_id).json()
+        resp = upload(file, best_server, folder_id)
+        if resp is None:
+            continue
+        upload_resp = resp.json()
+
+        if upload_resp.get('status') != 'ok':
+            rprint(
+                f'[red]ERROR: Upload of [blue]{file}[/blue] failed: '
+                f'{upload_resp.get("status", "unknown error")}[/red]')
+            continue
 
         if to_single_folder and not os.getenv('GOFILE_TOKEN'):
             rprint('[red]ERROR: Gofile token is required when passing '

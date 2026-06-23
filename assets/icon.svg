@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="gofilepy icon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6d5efc"/>
+      <stop offset="1" stop-color="#3b1ed1"/>
+    </linearGradient>
+    <linearGradient id="arrow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e7e3ff"/>
+    </linearGradient>
+  </defs>
+  <rect x="16" y="16" width="480" height="480" rx="108" fill="url(#bg)"/>
+  <g fill="none" stroke="url(#arrow)" stroke-width="30" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M150 318a78 78 0 0 1 8-155 104 104 0 0 1 200 18 70 70 0 0 1 4 137" fill="rgba(255,255,255,0.10)"/>
+  </g>
+  <g fill="url(#arrow)">
+    <path d="M256 224l74 74a16 16 0 0 1-22 23l-36-36v109a16 16 0 0 1-32 0V285l-36 36a16 16 0 0 1-22-23z"/>
+  </g>
+</svg>

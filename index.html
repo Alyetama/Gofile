@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>gofilepy — Upload files to Gofile.io from your terminal</title>
+<meta name="description" content="gofilepy is a fast, friendly Python CLI and wrapper for the Gofile.io upload API. Upload files and folders, share a single URL, export responses to JSON.">
+<meta property="og:title" content="gofilepy — Upload files to Gofile.io from your terminal">
+<meta property="og:description" content="A fast, friendly Python CLI for uploading files and folders to Gofile.io.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/icon.svg">
+<link rel="icon" type="image/svg+xml" href="assets/icon.svg">
+<style>
+  :root{
+    --bg:#0d0b1f; --bg2:#15123a; --card:#1b1840; --line:#2c2860;
+    --brand:#6d5efc; --brand2:#9b8cff; --text:#eceaff; --muted:#a7a3cf;
+    --code:#0a0820; --ok:#54e6a0;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1200px 600px at 50% -10%,#241f5a 0%,var(--bg) 55%);color:var(--text);line-height:1.6}
+  a{color:var(--brand2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:960px;margin:0 auto;padding:0 22px}
+  header{text-align:center;padding:80px 0 48px}
+  .logo{width:104px;height:104px;border-radius:26px;box-shadow:0 18px 50px rgba(109,94,252,.45)}
+  h1{font-size:clamp(2.2rem,5vw,3.4rem);margin:22px 0 8px;letter-spacing:-.02em}
+  .tag{font-size:1.2rem;color:var(--muted);margin:0 auto;max-width:620px}
+  .badges{margin-top:22px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .badges img{height:22px}
+  .cta{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+  .btn{display:inline-block;padding:12px 24px;border-radius:12px;font-weight:600;border:1px solid var(--line)}
+  .btn.primary{background:linear-gradient(135deg,var(--brand),#3b1ed1);color:#fff;border:none}
+  .btn.primary:hover,.btn:hover{text-decoration:none;transform:translateY(-1px)}
+  .btn{transition:transform .15s ease}
+  section{padding:34px 0}
+  h2{font-size:1.6rem;margin:0 0 18px;letter-spacing:-.01em}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+  .card{background:linear-gradient(180deg,var(--card),#16143a);border:1px solid var(--line);
+    border-radius:16px;padding:22px}
+  .card h3{margin:0 0 6px;font-size:1.1rem}
+  .card p{margin:0;color:var(--muted);font-size:.96rem}
+  .ico{font-size:1.6rem}
+  pre{background:var(--code);border:1px solid var(--line);border-radius:14px;padding:18px 20px;
+    overflow-x:auto;font-size:.92rem}
+  code{font-family:"SF Mono",SFMono-Regular,Menlo,Consolas,monospace}
+  pre code{color:#d8d3ff}
+  .term{box-shadow:0 16px 40px rgba(0,0,0,.4)}
+  .term .pl{color:var(--ok)}
+  .opt{display:grid;grid-template-columns:160px 1fr;gap:6px 18px}
+  .opt code{color:var(--brand2)}
+  .opt span{color:var(--muted)}
+  @media(max-width:560px){.opt{grid-template-columns:1fr}}
+  footer{text-align:center;color:var(--muted);padding:48px 0 64px;font-size:.9rem;border-top:1px solid var(--line);margin-top:30px}
+  .note{font-size:.82rem;color:#7d79a8;max-width:680px;margin:18px auto 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <img class="logo" src="assets/icon.svg" alt="gofilepy logo">
+    <h1>gofilepy</h1>
+    <p class="tag">🚀 A fast, friendly Python CLI &amp; wrapper for the <strong>Gofile.io</strong> upload API.</p>
+    <div class="badges">
+      <a href="https://pypi.org/project/gofilepy"><img src="https://badge.fury.io/py/gofilepy.svg" alt="PyPI version"></a>
+      <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/Python-%3E=3.7-blue.svg" alt="Python >=3.7"></a>
+      <a href="https://www.python.org/dev/peps/pep-0008/"><img src="https://img.shields.io/badge/Code%20style-PEP%208-orange.svg" alt="PEP8"></a>
+      <a href="https://github.com/Alyetama/Gofile/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"></a>
+    </div>
+    <div class="cta">
+      <a class="btn primary" href="#install">Get started</a>
+      <a class="btn" href="https://github.com/Alyetama/Gofile">View on GitHub</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section>
+    <h2>Why gofilepy?</h2>
+    <div class="grid">
+      <div class="card"><div class="ico">📁</div><h3>Files &amp; folders</h3><p>Upload single files, multiple files, or whole directories recursively in one command.</p></div>
+      <div class="card"><div class="ico">🔗</div><h3>One shared URL</h3><p>Bundle multiple files into a single folder so they all share one download page.</p></div>
+      <div class="card"><div class="ico">💾</div><h3>JSON export</h3><p>Export every API response to a JSON file for logging or automation.</p></div>
+      <div class="card"><div class="ico">🔑</div><h3>Account uploads</h3><p>Set a <code>GOFILE_TOKEN</code> to save uploads straight to your Gofile account.</p></div>
+      <div class="card"><div class="ico">🎨</div><h3>Rich output</h3><p>Clean, colorful terminal panels and a live progress bar powered by <code>rich</code>.</p></div>
+      <div class="card"><div class="ico">🔁</div><h3>Resilient</h3><p>Automatic retries on connection errors so a flaky network won't kill your upload.</p></div>
+    </div>
+  </section>
+
+  <section id="install">
+    <h2>Installation</h2>
+    <pre class="term"><code><span class="pl">$</span> pip install gofilepy</code></pre>
+    <p style="color:var(--muted);margin:.4rem 0 0">Upgrade an existing install:</p>
+    <pre class="term"><code><span class="pl">$</span> pip install -U gofilepy</code></pre>
+  </section>
+
+  <section>
+    <h2>Usage</h2>
+    <pre class="term"><code><span class="pl">$</span> gofile foo.txt
+╭───────────────────────────────────────────╮
+│ File: foo.txt                             │
+│ Download page: https://gofile.io/d/PkdZP5 │
+╰───────────────────────────────────────────╯
+Uploading progress: ━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00</code></pre>
+
+    <div class="opt" style="margin-top:18px">
+      <code>path ...</code><span>One or more file and/or folder paths to upload.</span>
+      <code>-s, --to-single-folder</code><span>Upload multiple files to the same folder, sharing one URL (requires <code>GOFILE_TOKEN</code>).</span>
+      <code>-o, --open-urls</code><span>Open the download URL(s) in the browser when done (macOS only).</span>
+      <code>-e, --export</code><span>Export the upload response(s) to a JSON file.</span>
+      <code>-vv, --verbose</code><span>Show the full API response for each upload.</span>
+      <code>-h, --help</code><span>Show the help message and exit.</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Save uploads to your account</h2>
+    <p style="color:var(--muted)">Grab your token from the <a href="https://gofile.io/myProfile">profile page</a> and export it:</p>
+    <pre class="term"><code><span class="pl">$</span> export GOFILE_TOKEN='xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'</code></pre>
+  </section>
+
+  <p class="note">Disclaimer: This tool is not associated with Gofile, WOJTEK SAS ©, or the Gofile Team.</p>
+</div>
+
+<footer>
+  <p>Made with 💜 by <a href="https://github.com/Alyetama">Alyetama</a> · <a href="https://github.com/Alyetama/Gofile">Source on GitHub</a> · <a href="https://pypi.org/project/gofilepy">PyPI</a></p>
+</footer>
+</body>
+</html>
